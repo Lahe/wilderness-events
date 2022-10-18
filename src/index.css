@@ -1,0 +1,24 @@
+@import url('https://runeapps.org/nis/nis.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, *:before, *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+body {
+    /*font-family: trajan-pro-3, sans-serif !important;*/
+    min-width: 320px;
+    min-height: 320px;
+    background-image: none !important;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+}

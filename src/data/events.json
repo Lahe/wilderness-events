@@ -1,0 +1,93 @@
+[
+  {
+    "id": 0,
+    "name": "Spider Swarm",
+    "location": "Border north of Varrock beacon",
+    "tags": ["Combat"],
+    "wikiUrl": "https://runescape.wiki/w/Wilderness_Flash_Events#Spider_Swarm"
+  },
+  {
+    "id": 1,
+    "name": "Unnatural Outcrop",
+    "location": "Mage of Zamorak",
+    "tags": ["Skilling"],
+    "wikiUrl": "https://runescape.wiki/w/Wilderness_Flash_Events#Unnatural_Outcrop"
+  },
+  {
+    "id": 2,
+    "name": "Demon Stragglers",
+    "location": "West of the centre of the Wilderness Crater",
+    "tags": ["Combat"],
+    "wikiUrl": "https://runescape.wiki/w/Wilderness_Flash_Events#Demon_Stragglers"
+  },
+  {
+    "id": 3,
+    "name": "Butterfly Swarm",
+    "location": "Obelisk south-east of Wilderness lodestone",
+    "tags": ["Skilling"],
+    "wikiUrl": "https://runescape.wiki/w/Wilderness_Flash_Events#Butterfly_Swarm"
+  },
+  {
+    "id": 4,
+    "name": "King Black Dragon Rampage",
+    "location": "South of Charming Moths, near Daemonheim",
+    "tags": ["Special", "Combat"],
+    "wikiUrl": "https://runescape.wiki/w/Wilderness_Flash_Events#King_Black_Dragon_Rampage_(Special_Event)"
+  },
+  {
+    "id": 5,
+    "name": "Forgotten Soldiers",
+    "location": "North of Waterfiends, near Daemonheim",
+    "tags": ["Combat"],
+    "wikiUrl": "https://runescape.wiki/w/Wilderness_Flash_Events#Forgotten_Soldiers"
+  },
+  {
+    "id": 6,
+    "name": "Surprising Seedlings",
+    "location": "Pond south of Wilderness lodestone",
+    "tags": ["Skilling"],
+    "wikiUrl": "https://runescape.wiki/w/Wilderness_Flash_Events#Surprising_Seedlings"
+  },
+  {
+    "id": 7,
+    "name": "Hellhound Pack",
+    "location": "Near the ladder east of Death Plateau beacon",
+    "tags": ["Combat"],
+    "wikiUrl": "https://runescape.wiki/w/Wilderness_Flash_Events#Hellhound_Pack"
+  },
+  {
+    "id": 8,
+    "name": "Infernal Star",
+    "location": "North-east of Chaos Temple",
+    "tags": ["Special", "Skilling", "Combat"],
+    "wikiUrl": "https://runescape.wiki/w/Wilderness_Flash_Events#Infernal_Star_(Special_Event)"
+  },
+  {
+    "id": 9,
+    "name": "Lost Souls",
+    "location": "Forgotten Cemetery",
+    "tags": ["Skilling", "Combat"],
+    "wikiUrl": "https://runescape.wiki/w/Wilderness_Flash_Events#Lost_Souls"
+  },
+  {
+    "id": 10,
+    "name": "Ramokee Incursion",
+    "location": "West of Daemonheim shipwreck",
+    "tags": ["Combat"],
+    "wikiUrl": "https://runescape.wiki/w/Wilderness_Flash_Events#Ramokee_Incursion"
+  },
+  {
+    "id": 11,
+    "name": "Displaced Energy",
+    "location": "Near the ladder east of Death Plateau beacon",
+    "tags": ["Skilling"],
+    "wikiUrl": "https://runescape.wiki/w/Wilderness_Flash_Events#Displaced_Energy"
+  },
+  {
+    "id": 12,
+    "name": "Evil Bloodwood Tree",
+    "location": "Green patch of land south-west of the Wilderness Crater lodestone",
+    "tags": ["Special", "Skilling"],
+    "wikiUrl": "https://runescape.wiki/w/Wilderness_Flash_Events#Evil_Bloodwood_Tree_(Special_Event)"
+  }
+]
