@@ -13,12 +13,14 @@ notifies you when it is about to start.
 ## Settings
 
 - **Notify 5 minutes before start** - sends a desktop notification up to 5 minutes before the next event is about to
-  start (also works outside Alt1)
+  start (also works outside of Alt1)
 - **Only show special events** - only tracks special events
+
+*Permit push notifications in your browser for the app if using outside of Alt1*
 
 ## Installation:
 
 - Install by pasting this link into your web browser:  
   `alt1://addapp/https://lahe.github.io/wilderness-events/appconfig.json`
-- By navigating to this link in the Alt1 built-in browser and adding it manually:  
-  https://lahe.github.io/wilderness-events
+- Or by navigating to this link in the Alt1 built-in browser and adding it manually:  
+  https://lahe.github.io/wilderness-events/
