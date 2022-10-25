@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useInterval } from '../utils/useInterval'
-import { differenceInSeconds } from 'date-fns'
+import { differenceInMilliseconds, millisecondsToHours } from 'date-fns'
 import { formatInTimeZone } from 'date-fns-tz'
 
 interface Props {
@@ -13,16 +13,16 @@ interface Props {
 }
 
 const formatTime = (time: number) => {
-  const format = time >= 3600 ? 'HH:mm:ss' : 'mm:ss'
-  return formatInTimeZone(time * 1000, 'UTC', format)
+  const format = millisecondsToHours(time) >= 1 ? 'HH:mm:ss' : 'mm:ss'
+  return formatInTimeZone(time, 'UTC', format)
 }
 
 function Countdown({ finalDate, onFinish, beforeFinish, onBeforeFinish, interval = 1000 }: Props) {
-  const [time, setTime] = useState<number>(differenceInSeconds(finalDate, new Date()))
+  const [time, setTime] = useState<number>(differenceInMilliseconds(finalDate, new Date()))
 
   useInterval(
     () => {
-      const remaining = differenceInSeconds(finalDate, new Date())
+      const remaining = differenceInMilliseconds(finalDate, new Date())
       if (beforeFinish && onBeforeFinish && remaining <= beforeFinish) {
         onBeforeFinish()
       }

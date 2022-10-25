@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import events from '../data/events.json'
 import { useSettingsContext } from '../utils/settingsContext'
 import Countdown from './Countdown'
-import { add, differenceInHours, formatDistanceToNow, getMinutes, getSeconds } from 'date-fns'
+import { add, addSeconds, differenceInHours, formatDistanceToNow, getMinutes, getSeconds } from 'date-fns'
 import { pushNotification } from './Utils'
 import classNames from 'classnames'
 
@@ -18,7 +18,7 @@ interface Event {
 }
 
 const getNextEvent = (special: boolean): Event => {
-  const date = new Date()
+  const date = addSeconds(new Date(), 1) // guarantee hour rollover
   const idx = differenceInHours(date, startDate) % 13
   const event: Event = special
     ? events.find((e: Event) => e.id >= idx && e.tags.includes('Special')) || events[idx]
@@ -64,7 +64,7 @@ function Event() {
         <div className="mb-1">Time until next event:</div>
         <Countdown
           finalDate={nextEvent.startTime || new Date()}
-          beforeFinish={settings.notify && !notified ? 300 : undefined}
+          beforeFinish={settings.notify && !notified ? 300 * 1000 : undefined}
           onBeforeFinish={settings.notify && !notified ? handleNotification : undefined}
           onFinish={updateEvent}
           key={nextEvent.id}
