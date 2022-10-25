@@ -1,7 +1,7 @@
 {
   "appName": "Wilderness Events",
   "description": "Tracks the status of the upcoming Wilderness Flash Event and notifies when it is about to start.",
-  "appUrl": "/",
+  "appUrl": "/wilderness-events/",
   "configUrl": "/appconfig.json",
   "iconUrl": "/favicon.png",
   "defaultWidth": 296,
