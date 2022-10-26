@@ -3,7 +3,7 @@
 Tracks the status of the upcoming [Wilderness Flash Event](https://runescape.wiki/w/Wilderness_Flash_Events) and
 notifies you when it is about to start.
 
-![wilderness-events](/public/wildtracker.png)
+![wilderness-events](/public/wildtracker.png) ![notification](/public/notification.png)
 
 - **Event tags** - to help differentiate between the different event types (Special / Combat / Skilling)
 - **RuneScape Wiki button** - opens a wiki page of the upcoming event
