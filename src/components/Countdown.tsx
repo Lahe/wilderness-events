@@ -17,12 +17,14 @@ const formatTime = (time: number) => {
   return formatInTimeZone(time, 'UTC', format)
 }
 
+const roundMs = (n: number) => Math.round(n / 1000) * 1000
+
 function Countdown({ finalDate, onFinish, beforeFinish, onBeforeFinish, interval = 1000 }: Props) {
-  const [time, setTime] = useState<number>(differenceInMilliseconds(finalDate, new Date()))
+  const [time, setTime] = useState<number>(roundMs(differenceInMilliseconds(finalDate, new Date())))
 
   useInterval(
     () => {
-      const remaining = differenceInMilliseconds(finalDate, new Date())
+      const remaining = roundMs(differenceInMilliseconds(finalDate, new Date()))
       if (beforeFinish && onBeforeFinish && remaining <= beforeFinish) {
         onBeforeFinish()
       }
