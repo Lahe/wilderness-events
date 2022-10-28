@@ -6,6 +6,8 @@ import { formatInTimeZone } from 'date-fns-tz'
 interface Props {
   finalDate: Date
   onFinish: () => void
+  className: string
+  title: string
   beforeFinish?: number
   onBeforeFinish?: () => void
   timeFormat?: string
@@ -19,7 +21,7 @@ const formatTime = (time: number) => {
 
 const roundMs = (n: number) => Math.round(n / 1000) * 1000
 
-function Countdown({ finalDate, onFinish, beforeFinish, onBeforeFinish, interval = 1000 }: Props) {
+function Countdown({ finalDate, onFinish, className, title, beforeFinish, onBeforeFinish, interval = 1000 }: Props) {
   const [time, setTime] = useState<number>(roundMs(differenceInMilliseconds(finalDate, new Date())))
 
   useInterval(
@@ -36,7 +38,11 @@ function Countdown({ finalDate, onFinish, beforeFinish, onBeforeFinish, interval
     time > 0 ? interval : null
   )
 
-  return <div className="text-3xl font-bold">{formatTime(time)}</div>
+  return (
+    <div className={className} title={title}>
+      {formatTime(time)}
+    </div>
+  )
 }
 
 export default Countdown

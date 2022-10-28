@@ -5,6 +5,7 @@ import Countdown from './Countdown'
 import { add, addSeconds, differenceInHours, formatDistanceToNow, getMinutes, getSeconds } from 'date-fns'
 import { pushNotification } from './Utils'
 import classNames from 'classnames'
+import { useMediaQuery } from '../utils/useMediaQuery'
 
 const startDate = new Date('2022-10-17T10:00:00+00:00')
 
@@ -36,10 +37,12 @@ function Event() {
   const { settings } = useSettingsContext()
   const [nextEvent, setNextEvent] = useState<Event>(getNextEvent(settings.special))
   const [notified, setNotified] = useState<boolean>(false)
+  const showName = useMediaQuery('(min-width: 15rem) and (min-height: 11rem)')
+  const showLocation = useMediaQuery('(min-width: 15rem) and (min-height: 18rem)')
 
   useEffect(() => {
     setNextEvent(getNextEvent(settings.special))
-  }, [settings])
+  }, [settings.special])
 
   const handleNotification = () => {
     const title = 'Wilderness Event Tracker'
@@ -59,62 +62,85 @@ function Event() {
   }
 
   return (
-    <div className="flex flex-col h-full w-full">
-      <div className="px-3 py-2">
-        <div className="mb-1">Time until next event:</div>
+    <div className="flex flex-col">
+      {!showName && !showLocation && (
+        <div className="absolute p-1 right-0 top-8">
+          <a
+            className="compactbutton block bg-[url('./assets/infoicon.png')]"
+            href={nextEvent.wikiUrl}
+            target="_blank"
+            title={`Next event: ${nextEvent.name}`}
+          />
+        </div>
+      )}
+      <div className="min-h-[5rem] px-3 py-2">
+        <div className="mb-1">Next event in:</div>
         <Countdown
+          className={classNames(
+            !showName && !showLocation && settings.special ? 'text-amber-500' : 'text-inherit',
+            'text-3xl font-bold'
+          )}
           finalDate={nextEvent.startTime || new Date()}
           beforeFinish={settings.notify && !notified ? 300 * 1000 : undefined}
           onBeforeFinish={settings.notify && !notified ? handleNotification : undefined}
           onFinish={updateEvent}
+          title={`Next event: ${nextEvent.name}`}
           key={nextEvent.id}
         />
       </div>
-      <div className="nisseperator relative" />
-      <div className="px-3 py-2">
-        <div className="flex flex-row mb-1 relative">
-          <div className="flex-grow">Next event:</div>
-          <div className="absolute top-0 right-0">
-            <a
-              className="w-8 h-8 block bg-[url('./assets/wikibutton.png')] bg-contain"
-              href={nextEvent.wikiUrl}
-              target="_blank"
-              title="Open Wiki link to event"
-            />
-          </div>
-        </div>
-        <div className="text-base font-bold w-11/12">{nextEvent.name}</div>
-        <div className="flex flex-row mt-1">
-          {nextEvent.tags.map((tag: string, idx) => (
-            <div
-              key={tag}
-              className={classNames(
-                'text-xs inline-flex items-center font-bold px-3 py-1 rounded-full',
-                idx > 0 ? 'ml-2' : '',
-                tag === 'Special'
-                  ? 'bg-amber-500 text-neutral-900 border-amber-700 hover:bg-amber-600 hover:text-neutral-100'
-                  : 'bg-neutral-300 text-neutral-900 border-neutral-700 hover:bg-neutral-700 hover:text-neutral-100'
-              )}
-            >
-              {tag}
+      {showName && (
+        <>
+          <div className="nisseperator relative" />
+          <div className="min-h-[6rem] px-3 py-2">
+            <div className="flex flex-row mb-1 relative">
+              <div className="flex-grow">Next event:</div>
+              <div className="absolute top-0 right-0">
+                <a
+                  className="w-8 h-8 block bg-[url('./assets/wikibutton.png')] bg-contain"
+                  href={nextEvent.wikiUrl}
+                  target="_blank"
+                  title="Open Wiki link to event"
+                />
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
-      <div className="nisseperator relative" />
-      <div className="px-3 py-2">
-        <div className="flex flex-row mb-1 relative">
-          <div className="flex-grow">Location:</div>
-          {/*          <div className="absolute top-0 right-0">
+            <div className="text-base font-bold w-11/12">{nextEvent.name}</div>
+            <div className="flex flex-row mt-1">
+              {nextEvent.tags.map((tag: string, idx) => (
+                <div
+                  key={tag}
+                  className={classNames(
+                    'text-xs inline-flex items-center font-bold px-3 py-1 rounded-full',
+                    idx > 0 ? 'ml-2' : '',
+                    tag === 'Special'
+                      ? 'bg-amber-500 text-neutral-900 border-amber-700 hover:bg-amber-600 hover:text-neutral-100'
+                      : 'bg-neutral-300 text-neutral-900 border-neutral-700 hover:bg-neutral-700 hover:text-neutral-100'
+                  )}
+                >
+                  {tag}
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+      {showLocation && (
+        <>
+          <div className="nisseperator relative" />
+          <div className="min-h-[7rem] px-3 py-2">
+            <div className="flex flex-row mb-1 relative">
+              <div className="flex-grow">Location:</div>
+              {/*          <div className="absolute top-0 right-0">
             <button
               className="w-6 h-6 bg-[url('./assets/worldmap.png')]"
               onClick={openMapLocation}
               title="Show location on map"
             />
           </div>*/}
-        </div>
-        <div className="text-base font-bold w-11/12">{nextEvent.location}</div>
-      </div>
+            </div>
+            <div className="text-base font-bold w-11/12">{nextEvent.location}</div>
+          </div>
+        </>
+      )}
     </div>
   )
 }

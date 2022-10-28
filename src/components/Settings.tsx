@@ -2,30 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { useSettingsContext } from '../utils/settingsContext'
 
 interface Props {
-  show: boolean
-  onShowChange: () => void
+  onResizableClicked: () => void
 }
 
-function Settings({ show, onShowChange }: Props) {
+function Settings({ onResizableClicked }: Props) {
   const { settings, setSettings } = useSettingsContext()
   const [notify, setNotify] = useState<boolean>(settings.notify || false)
   const [special, setSpecial] = useState<boolean>(settings.special || false)
+  const [resizable, setResizable] = useState<boolean>(settings.resizable || false)
 
   useEffect(() => {
-    setSettings({ notify, special })
-  }, [notify, special])
+    setSettings({ notify, special, resizable })
+  }, [notify, special, resizable])
 
-  return show ? (
-    <div className="w-full absolute p-2 bottom-0 nisborder border-t-4 border-x-0 border-b-0">
+  return (
+    <div className="w-full h-screen p-2 bottom-0 nisborder border-2">
       <div className="flex items-center">
         <p className="flex-grow font-bold text-lg">Settings</p>
-        <div
-          className="nissmallimagebutton menubutton float-right text-center"
-          onClick={onShowChange}
-          title="Close settings"
-        >
-          <i className="fa fa-close fa-lg" />
-        </div>
       </div>
       <div className="flex flex-col">
         <label className="p-2">
@@ -40,12 +33,23 @@ function Settings({ show, onShowChange }: Props) {
             checked={special}
             onChange={() => setSpecial(!special)}
           />
-          Only show special events
+          Show only special events
+        </label>
+        <label className="p-2">
+          <input
+            className="mr-2"
+            type="checkbox"
+            name="compact"
+            checked={resizable}
+            onChange={() => {
+              onResizableClicked()
+              setResizable(!resizable)
+            }}
+          />
+          Make resizable
         </label>
       </div>
     </div>
-  ) : (
-    <></>
   )
 }
 
