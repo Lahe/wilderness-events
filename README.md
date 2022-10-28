@@ -27,6 +27,6 @@ notifies you when it is about to start.
 ## Installation:
 
 - Install by pasting this link into your web browser:  
-  `alt1://addapp/https://lahe.github.io/wilderness-events/appconfig.json`
+  `alt1://addapp/https://lahe.github.io/wilderness-events/appconfig.compact.json`
 - Or by navigating to this link in the Alt1 built-in browser and adding it manually:  
   https://lahe.github.io/wilderness-events/
