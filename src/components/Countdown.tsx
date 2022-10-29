@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { useInterval } from '../utils/useInterval'
-import { differenceInMilliseconds, millisecondsToHours } from 'date-fns'
-import { formatInTimeZone } from 'date-fns-tz'
+import dayjs, { Dayjs } from 'dayjs'
 
 interface Props {
-  finalDate: Date
+  finalDate: Dayjs
   onFinish: () => void
   className: string
   title: string
@@ -15,18 +14,19 @@ interface Props {
 }
 
 const formatTime = (time: number) => {
-  const format = millisecondsToHours(time) >= 1 ? 'HH:mm:ss' : 'mm:ss'
-  return formatInTimeZone(time, 'UTC', format)
+  const duration = dayjs.duration(time)
+  const format = duration.hours() >= 1 ? 'HH:mm:ss' : 'mm:ss'
+  return duration.format(format)
 }
 
 const roundMs = (n: number) => Math.round(n / 1000) * 1000
 
 function Countdown({ finalDate, onFinish, className, title, beforeFinish, onBeforeFinish, interval = 1000 }: Props) {
-  const [time, setTime] = useState<number>(roundMs(differenceInMilliseconds(finalDate, new Date())))
+  const [time, setTime] = useState<number>(roundMs(finalDate.diff(dayjs.utc(), 'milliseconds')))
 
   useInterval(
     () => {
-      const remaining = roundMs(differenceInMilliseconds(finalDate, new Date()))
+      const remaining = roundMs(finalDate.diff(dayjs.utc(), 'milliseconds'))
       if (beforeFinish && onBeforeFinish && remaining <= beforeFinish) {
         onBeforeFinish()
       }
