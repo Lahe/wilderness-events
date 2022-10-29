@@ -13,7 +13,7 @@ declare global {
 
 if (window.alt1) {
   const alt1 = window.alt1
-  alt1.identifyAppUrl('/appconfig.json')
+  alt1.identifyAppUrl('appconfig.json')
 } else {
   initializeNotifications()
 }

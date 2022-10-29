@@ -16,9 +16,9 @@ function App() {
     if (window.alt1) {
       const alt1 = window.alt1
       if (settings.resizable) {
-        alt1.identifyAppUrl('/appconfig.compact.json')
+        alt1.identifyAppUrl('appconfig.compact.json')
       } else {
-        alt1.identifyAppUrl('/appconfig.json')
+        alt1.identifyAppUrl('appconfig.json')
       }
     }
   }, [settings.resizable])
