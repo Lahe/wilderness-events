@@ -7,6 +7,13 @@ notifies you when it is about to start.
 ![compact](/public/compact.png)  
 ![notification](/public/notification.png)  
 
+## Installation
+
+- Install by pasting this link into your web browser:  
+  `alt1://addapp/https://lahe.github.io/wilderness-events/appconfig.json`
+- Or by navigating to this link in the Alt1 built-in browser and adding it manually:  
+  https://lahe.github.io/wilderness-events/
+
 ## Settings
 
 - **Notify 5 minutes before start** - Sends a desktop notification up to 5 minutes before the next event is about to
@@ -23,10 +30,3 @@ notifies you when it is about to start.
 - **RuneScape Wiki button** - Opens a Wiki page of the upcoming event
 - **TODO: Map button** - Opens a new window of the RuneScape map with a marker at the location of the next event
 - **TODO: Upcoming events list** - Shows more upcoming events
-
-## Installation:
-
-- Install by pasting this link into your web browser:  
-  `alt1://addapp/https://lahe.github.io/wilderness-events/appconfig.json`
-- Or by navigating to this link in the Alt1 built-in browser and adding it manually:  
-  https://lahe.github.io/wilderness-events/
