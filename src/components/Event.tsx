@@ -58,7 +58,7 @@ function Event() {
 
   useInterval(
     () => {
-      if (tooltipActive && alt1 && alt1.rsActive) {
+      if (tooltipActive && alt1 && alt1.permissionGameState && alt1.rsActive) {
         showTooltip('')
         setTooltipActive(false)
       }
@@ -71,7 +71,7 @@ function Event() {
     const timeLeft = (dayjs.utc(nextEvent.startTime) || dayjs.utc()).fromNow()
     const message = `${nextEvent.name} event is starting ${timeLeft}!`
     pushNotification(title, message)
-    if (settings.tooltip && alt1 && !alt1.rsActive) {
+    if (settings.tooltip && alt1 && alt1.permissionGameState && !alt1.rsActive) {
       showTooltip(`${nextEvent.name} is about to start`)
       setTooltipActive(true)
     }

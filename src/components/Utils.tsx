@@ -4,13 +4,15 @@ import icon from '/favicon.png'
 // @ts-ignore
 const alt1 = window.alt1
 
-export const showTooltip = (tooltip = '') => {
-  if (tooltip != '') {
-    if (!alt1.setTooltip(tooltip)) {
-      console.log('Error: No tooltip permission')
+export const showTooltip = (tooltip: string = '') => {
+  if (alt1) {
+    if (tooltip != '') {
+      if (!alt1.setTooltip(tooltip)) {
+        console.log('Error: No tooltip permission')
+      }
+    } else {
+      alt1.clearTooltip()
     }
-  } else {
-    alt1.clearTooltip()
   }
 }
 
