@@ -1,0 +1,16 @@
+{
+  "appName": "Wilderness Events",
+  "description": "Tracks the status of the upcoming Wilderness Flash Event and notifies when it is about to start.",
+  "appUrl": "./index.html",
+  "configUrl": "./appconfig.compact.json",
+  "iconUrl": "./favicon.png",
+  "defaultWidth": 304,
+  "defaultHeight": 304,
+  "minWidth": 168,
+  "minHeight": 92,
+  "maxWidth": 304,
+  "maxHeight": 304,
+  "requestHandlers": [],
+  "activators": [],
+  "permissions": "gamestate,overlay"
+}
