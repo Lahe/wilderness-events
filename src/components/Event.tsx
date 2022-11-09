@@ -86,7 +86,7 @@ function Event() {
         <div className="mb-1">Next event in:</div>
         <Countdown
           className={classNames(
-            !showName && !showLocation && settings.special ? 'text-amber-500' : 'text-inherit',
+            !showName && !showLocation && nextEvent.tags.includes('Special') ? 'text-amber-500' : 'text-inherit',
             'text-3xl font-bold'
           )}
           finalDate={nextEvent.startTime || dayjs.utc()}
