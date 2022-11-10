@@ -8,12 +8,13 @@ interface Props {
 function Settings({ onResizableClicked }: Props) {
   const { settings, setSettings } = useSettingsContext()
   const [notify, setNotify] = useState<boolean>(settings.notify || false)
+  const [tooltip, setTooltip] = useState<boolean>(settings.tooltip || false)
   const [special, setSpecial] = useState<boolean>(settings.special || false)
   const [resizable, setResizable] = useState<boolean>(settings.resizable || false)
 
   useEffect(() => {
-    setSettings({ notify, special, resizable })
-  }, [notify, special, resizable])
+    setSettings({ notify, tooltip, special, resizable })
+  }, [notify, tooltip, special, resizable])
 
   return (
     <div className="w-full h-screen p-2 bottom-0 nisborder border-2">
@@ -21,11 +22,21 @@ function Settings({ onResizableClicked }: Props) {
         <p className="flex-grow font-bold text-lg">Settings</p>
       </div>
       <div className="flex flex-col">
-        <label className="p-2">
+        <label className="p-2 flex flex-row items-center">
           <input className="mr-2" type="checkbox" name="notify" checked={notify} onChange={() => setNotify(!notify)} />
-          Notify 5 minutes before start
+          <p>Notify 5 minutes before start</p>
         </label>
-        <label className="p-2">
+        <label className="p-2 flex flex-row items-center">
+          <input
+            className="mr-2"
+            type="checkbox"
+            name="tooltip"
+            checked={tooltip}
+            onChange={() => setTooltip(!tooltip)}
+          />
+          <p>Show cursor tooltip on notification</p>
+        </label>
+        <label className="p-2 flex flex-row items-center">
           <input
             className="mr-2"
             type="checkbox"
@@ -33,9 +44,9 @@ function Settings({ onResizableClicked }: Props) {
             checked={special}
             onChange={() => setSpecial(!special)}
           />
-          Show only special events
+          <p>Show only special events</p>
         </label>
-        <label className="p-2">
+        <label className="p-2 flex flex-row items-center">
           <input
             className="mr-2"
             type="checkbox"
@@ -46,7 +57,7 @@ function Settings({ onResizableClicked }: Props) {
               setResizable(!resizable)
             }}
           />
-          Make resizable
+          <p>Make resizable</p>
         </label>
       </div>
     </div>

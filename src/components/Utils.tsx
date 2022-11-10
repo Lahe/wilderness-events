@@ -4,6 +4,16 @@ import icon from '/favicon.png'
 // @ts-ignore
 const alt1 = window.alt1
 
+export const showTooltip = (tooltip = '') => {
+  if (tooltip != '') {
+    if (!alt1.setTooltip(tooltip)) {
+      console.log('Error: No tooltip permission')
+    }
+  } else {
+    alt1.clearTooltip()
+  }
+}
+
 // Ask for notification permissions when using regular browser
 export const initializeNotifications = () => {
   if (!('Notification' in window)) {

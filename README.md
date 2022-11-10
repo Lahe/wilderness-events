@@ -18,6 +18,8 @@ notifies you when it is about to start.
 
 - **Notify 5 minutes before start** - Sends a desktop notification up to 5 minutes before the next event is about to
   start (also works outside of Alt1)
+- **Show cursor tooltip on notification** - Shows a cursor tooltip along with the desktop notification when the game is
+  not focused and an event is about to start. Click on the game window to make the tooltip disappear
 - **Show only special events** - Only tracks special events
 - **Make resizable** - Makes the window resizable. Shows elements based on window width and height.
   Hover over the timer or the info button to see the name of the next event

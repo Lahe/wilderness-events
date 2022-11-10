@@ -2,18 +2,20 @@ import React, { useEffect, useState } from 'react'
 import events from '../data/events.json'
 import { useSettingsContext } from '../utils/settingsContext'
 import Countdown from './Countdown'
-import { pushNotification } from './Utils'
+import { pushNotification, showTooltip } from './Utils'
 import classNames from 'classnames'
 import { useMediaQuery } from '../utils/useMediaQuery'
 import dayjs, { Dayjs } from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import duration from 'dayjs/plugin/duration'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { useInterval } from '../utils/useInterval'
 
 dayjs.extend(utc)
 dayjs.extend(duration)
 dayjs.extend(relativeTime)
 
+const alt1 = window.alt1
 const startDate = dayjs.utc('2022-10-17T10:00:00+00:00')
 
 interface Event {
@@ -46,6 +48,7 @@ function Event() {
   const { settings } = useSettingsContext()
   const [nextEvent, setNextEvent] = useState<Event>(getNextEvent(settings.special))
   const [notified, setNotified] = useState<boolean>(false)
+  const [tooltipActive, setTooltipActive] = useState<boolean>(false)
   const showName = useMediaQuery('(min-width: 15rem) and (min-height: 11rem)')
   const showLocation = useMediaQuery('(min-width: 15rem) and (min-height: 18rem)')
 
@@ -53,17 +56,35 @@ function Event() {
     setNextEvent(getNextEvent(settings.special))
   }, [settings.special])
 
+  useInterval(
+    () => {
+      if (tooltipActive && alt1 && alt1.rsActive) {
+        showTooltip('')
+        setTooltipActive(false)
+      }
+    },
+    tooltipActive ? 1000 : null
+  )
+
   const handleNotification = () => {
     const title = 'Wilderness Event Tracker'
     const timeLeft = (dayjs.utc(nextEvent.startTime) || dayjs.utc()).fromNow()
     const message = `${nextEvent.name} event is starting ${timeLeft}!`
     pushNotification(title, message)
-    if (settings.notify) setNotified(true)
+    if (settings.tooltip && alt1 && !alt1.rsActive) {
+      showTooltip(`${nextEvent.name} is about to start`)
+      setTooltipActive(true)
+    }
+    if (settings.notify) {
+      setNotified(true)
+    }
   }
 
   const updateEvent = () => {
     setNextEvent(getNextEvent(settings.special))
-    if (settings.notify) setNotified(false)
+    if (settings.notify) {
+      setNotified(false)
+    }
   }
 
   const openMapLocation = () => {
