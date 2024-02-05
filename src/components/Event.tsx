@@ -16,7 +16,7 @@ dayjs.extend(duration)
 dayjs.extend(relativeTime)
 
 const alt1 = window.alt1
-const startDate = dayjs.utc('2022-10-17T10:00:00+00:00')
+const startDate = dayjs.utc('2024-02-05T06:00:00+00:00')
 
 interface Event {
   id: number
@@ -29,7 +29,7 @@ interface Event {
 
 const getNextEvent = (special: boolean): Event => {
   const date = dayjs.utc().add(1, 'second') // guarantee hour rollover
-  const idx = date.diff(startDate, 'hours') % 13
+  const idx = date.diff(startDate, 'hours') % events.length
   const event: Event = special
     ? events.find((e: Event) => e.id >= idx && e.tags.includes('Special')) || events[idx]
     : events[idx]
