@@ -8,27 +8,27 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@alt1/base": "^1.0.0-alpha.6",
-    "classnames": "^2.3.2",
-    "dayjs": "^1.11.6",
+    "@alt1/base": "^1.0.0-alpha.7",
+    "classnames": "^2.5.1",
+    "dayjs": "^1.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.3",
-    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
-    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
-    "@types/node": "^16.11.68",
-    "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6",
-    "@vitejs/plugin-react": "^2.1.0",
-    "autoprefixer": "^10.4.12",
-    "fs-extra": "^10.1.0",
-    "postcss": "^8.4.18",
-    "prettier": "^2.7.1",
-    "tailwindcss": "3.1.8",
-    "typescript": "^4.8.4",
-    "vite": "^3.1.8"
+    "@babel/core": "^7.23.9",
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "@types/node": "^20.11.16",
+    "@types/react": "^18.2.53",
+    "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.17",
+    "fs-extra": "^11.2.0",
+    "postcss": "^8.4.33",
+    "prettier": "^3.2.5",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12"
   },
   "eslintConfig": {
     "extends": [
