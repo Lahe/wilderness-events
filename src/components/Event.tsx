@@ -48,6 +48,7 @@ function Event() {
   const { settings } = useSettingsContext()
   const [nextEvent, setNextEvent] = useState<Event>(getNextEvent(settings.special))
   const [notified, setNotified] = useState<boolean>(false)
+  const [notifiedStart, setNotifiedStart] = useState<boolean>(false)
   const [tooltipActive, setTooltipActive] = useState<boolean>(false)
   const showName = useMediaQuery('(min-width: 15rem) and (min-height: 11rem)')
   const showLocation = useMediaQuery('(min-width: 15rem) and (min-height: 18rem)')
@@ -66,7 +67,7 @@ function Event() {
     tooltipActive ? 1000 : null
   )
 
-  const handleNotification = () => {
+  const handleNotification = (onNotify: () => void) => {
     const title = 'Wilderness Event Tracker'
     const timeLeft = (dayjs.utc(nextEvent.startTime) || dayjs.utc()).fromNow()
     const message = `${nextEvent.name} event is starting ${timeLeft}!`
@@ -75,15 +76,16 @@ function Event() {
       showTooltip(`${nextEvent.name} is about to start`)
       setTooltipActive(true)
     }
-    if (settings.notify) {
-      setNotified(true)
-    }
+    onNotify()
   }
 
   const updateEvent = () => {
     setNextEvent(getNextEvent(settings.special))
     if (settings.notify) {
       setNotified(false)
+    }
+    if (settings.notifyStart) {
+      setNotifiedStart(false)
     }
   }
 
@@ -111,8 +113,30 @@ function Event() {
             'text-3xl font-bold'
           )}
           finalDate={nextEvent.startTime || dayjs.utc()}
-          beforeFinish={settings.notify && !notified ? 300 * 1000 : undefined}
-          onBeforeFinish={settings.notify && !notified ? handleNotification : undefined}
+          actions={[
+            // Handle notifications at 5 minutes
+            {
+              condition: (remaining) => settings.notify && !notified && remaining <= (300 * 1000),
+              callBack: () => {
+                handleNotification(() => {
+                  if (settings.notify) {
+                    setNotified(true)
+                  }
+                })
+              },
+            },
+            // Handles notifications at 5 seconds
+            {
+              condition: (remaining) => settings.notifyStart && !notifiedStart && remaining <= (5 * 1000),
+              callBack: () => {
+                handleNotification(() => {
+                  if (settings.notifyStart) {
+                    setNotifiedStart(true)
+                  }
+                })
+              },
+            },
+          ]}
           onFinish={updateEvent}
           title={`Next event: ${nextEvent.name}`}
           key={nextEvent.id}
