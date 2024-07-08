@@ -3,13 +3,22 @@ import { createContext, PropsWithChildren, useContext, useState } from 'react'
 interface Settings {
   notify: boolean
   notifyStart: boolean,
+  notifyStartTime: number,
   tooltip: boolean
   special: boolean
   resizable: boolean
 }
 
 const useSettings = () => {
-  const defaultSettings: Settings = { notify: true, notifyStart: true, tooltip: true, special: false, resizable: true }
+  const defaultSettings: Settings = {
+    notify: true,
+    notifyStart: false,
+    notifyStartTime: 30,
+    tooltip: true,
+    special: false,
+    resizable: true
+  }
+
   const [storedSettings, setStoredSettings] = useState<Settings>(() => {
     try {
       const value = localStorage.getItem('settings')

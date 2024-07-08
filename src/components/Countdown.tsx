@@ -14,7 +14,7 @@ interface Props {
 
 interface Action {
   condition: (number: number) => boolean
-  callBack: () => void
+  callback: () => void
 }
 
 const formatTime = (time: number) => {
@@ -34,7 +34,7 @@ function Countdown({ finalDate, onFinish, className, title, actions, interval = 
 
       actions.forEach(action => {
         if (action.condition(remaining)) {
-          action.callBack()
+          action.callback()
         }
       })
 

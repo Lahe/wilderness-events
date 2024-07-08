@@ -57,6 +57,10 @@ function Event() {
     setNextEvent(getNextEvent(settings.special))
   }, [settings.special])
 
+  useEffect(() => {
+    setNotifiedStart(false)
+  }, [settings.notifyStartTime]);
+
   useInterval(
     () => {
       if (tooltipActive && alt1 && alt1.permissionGameState && alt1.rsActive) {
@@ -89,6 +93,45 @@ function Event() {
     }
   }
 
+  const notificationActions = [
+    // Handle notification at 5 minutes
+    {
+      condition: (remaining: number) => {
+        if (settings.notify && !notified) {
+          if (remaining <= 300 * 1000) {
+            if (settings.notifyStart) {
+              // prevent double notification if app is opened (remaining <= settings.notifyStartTime) seconds before event
+              return remaining > settings.notifyStartTime * 1000
+            } else {
+              return true
+            }
+          }
+        }
+        return false
+      },
+      callback: () => {
+        handleNotification(() => {
+          if (settings.notify) {
+            setNotified(true)
+          }
+        })
+      },
+    },
+    // Handle notification at x seconds
+    {
+      condition: (remaining: number) => (
+        settings.notifyStart && !notifiedStart && (remaining <= settings.notifyStartTime * 1000)
+      ),
+      callback: () => {
+        handleNotification(() => {
+          if (settings.notifyStart) {
+            setNotifiedStart(true)
+          }
+        })
+      },
+    },
+  ]
+
   const openMapLocation = () => {
     // TODO
   }
@@ -113,30 +156,7 @@ function Event() {
             'text-3xl font-bold'
           )}
           finalDate={nextEvent.startTime || dayjs.utc()}
-          actions={[
-            // Handle notifications at 5 minutes
-            {
-              condition: (remaining) => settings.notify && !notified && remaining <= (300 * 1000),
-              callBack: () => {
-                handleNotification(() => {
-                  if (settings.notify) {
-                    setNotified(true)
-                  }
-                })
-              },
-            },
-            // Handles notifications at 5 seconds
-            {
-              condition: (remaining) => settings.notifyStart && !notifiedStart && remaining <= (5 * 1000),
-              callBack: () => {
-                handleNotification(() => {
-                  if (settings.notifyStart) {
-                    setNotifiedStart(true)
-                  }
-                })
-              },
-            },
-          ]}
+          actions={notificationActions}
           onFinish={updateEvent}
           title={`Next event: ${nextEvent.name}`}
           key={nextEvent.id}
