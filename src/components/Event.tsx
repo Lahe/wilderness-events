@@ -48,6 +48,7 @@ function Event() {
   const { settings } = useSettingsContext()
   const [nextEvent, setNextEvent] = useState<Event>(getNextEvent(settings.special))
   const [notified, setNotified] = useState<boolean>(false)
+  const [notifiedStart, setNotifiedStart] = useState<boolean>(false)
   const [tooltipActive, setTooltipActive] = useState<boolean>(false)
   const showName = useMediaQuery('(min-width: 15rem) and (min-height: 11rem)')
   const showLocation = useMediaQuery('(min-width: 15rem) and (min-height: 18rem)')
@@ -55,6 +56,10 @@ function Event() {
   useEffect(() => {
     setNextEvent(getNextEvent(settings.special))
   }, [settings.special])
+
+  useEffect(() => {
+    setNotifiedStart(false)
+  }, [settings.notifyStartTime]);
 
   useInterval(
     () => {
@@ -66,7 +71,7 @@ function Event() {
     tooltipActive ? 1000 : null
   )
 
-  const handleNotification = () => {
+  const handleNotification = (onNotify: () => void) => {
     const title = 'Wilderness Event Tracker'
     const timeLeft = (dayjs.utc(nextEvent.startTime) || dayjs.utc()).fromNow()
     const message = `${nextEvent.name} event is starting ${timeLeft}!`
@@ -75,9 +80,7 @@ function Event() {
       showTooltip(`${nextEvent.name} is about to start`)
       setTooltipActive(true)
     }
-    if (settings.notify) {
-      setNotified(true)
-    }
+    onNotify()
   }
 
   const updateEvent = () => {
@@ -85,7 +88,49 @@ function Event() {
     if (settings.notify) {
       setNotified(false)
     }
+    if (settings.notifyStart) {
+      setNotifiedStart(false)
+    }
   }
+
+  const notificationActions = [
+    // Handle notification at 5 minutes
+    {
+      condition: (remaining: number) => {
+        if (settings.notify && !notified) {
+          if (remaining <= 300 * 1000) {
+            if (settings.notifyStart) {
+              // prevent double notification if app is opened (remaining <= settings.notifyStartTime) seconds before event
+              return remaining > settings.notifyStartTime * 1000
+            } else {
+              return true
+            }
+          }
+        }
+        return false
+      },
+      callback: () => {
+        handleNotification(() => {
+          if (settings.notify) {
+            setNotified(true)
+          }
+        })
+      },
+    },
+    // Handle notification at x seconds
+    {
+      condition: (remaining: number) => (
+        settings.notifyStart && !notifiedStart && (remaining <= settings.notifyStartTime * 1000)
+      ),
+      callback: () => {
+        handleNotification(() => {
+          if (settings.notifyStart) {
+            setNotifiedStart(true)
+          }
+        })
+      },
+    },
+  ]
 
   const openMapLocation = () => {
     // TODO
@@ -111,8 +156,7 @@ function Event() {
             'text-3xl font-bold'
           )}
           finalDate={nextEvent.startTime || dayjs.utc()}
-          beforeFinish={settings.notify && !notified ? 300 * 1000 : undefined}
-          onBeforeFinish={settings.notify && !notified ? handleNotification : undefined}
+          actions={notificationActions}
           onFinish={updateEvent}
           title={`Next event: ${nextEvent.name}`}
           key={nextEvent.id}

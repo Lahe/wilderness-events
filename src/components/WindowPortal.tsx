@@ -8,7 +8,7 @@ interface Props {
 }
 
 const WindowPortal = ({ children, onClose }: Props) => {
-  const externalWindow = useMemo<Window | null>(() => window.open('', '', 'width=275,height=200,left=300,top=200'), [])
+  const externalWindow = useMemo<Window | null>(() => window.open('', '', 'width=275,height=225,left=300,top=200'), [])
   const windowPortalElement = document.createElement('div')
 
   if (externalWindow) {

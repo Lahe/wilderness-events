@@ -7,10 +7,14 @@ interface Props {
   onFinish: () => void
   className: string
   title: string
-  beforeFinish?: number
-  onBeforeFinish?: () => void
+  actions: Action[]
   timeFormat?: string
   interval?: number
+}
+
+interface Action {
+  condition: (number: number) => boolean
+  callback: () => void
 }
 
 const formatTime = (time: number) => {
@@ -21,15 +25,19 @@ const formatTime = (time: number) => {
 
 const roundMs = (n: number) => Math.round(n / 1000) * 1000
 
-function Countdown({ finalDate, onFinish, className, title, beforeFinish, onBeforeFinish, interval = 1000 }: Props) {
+function Countdown({ finalDate, onFinish, className, title, actions, interval = 1000 }: Props) {
   const [time, setTime] = useState<number>(roundMs(finalDate.diff(dayjs.utc(), 'milliseconds')))
 
   useInterval(
     () => {
       const remaining = roundMs(finalDate.diff(dayjs.utc(), 'milliseconds'))
-      if (beforeFinish && onBeforeFinish && remaining <= beforeFinish) {
-        onBeforeFinish()
-      }
+
+      actions.forEach(action => {
+        if (action.condition(remaining)) {
+          action.callback()
+        }
+      })
+
       if (remaining <= 0) {
         onFinish()
       }
